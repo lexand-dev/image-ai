@@ -29,6 +29,7 @@ import {
   useSidebar,
   SidebarFooter
 } from "@/components/ui/sidebar";
+import { Logo } from "./logo";
 
 const tools = [
   { name: "Elements", icon: Shapes },
@@ -51,9 +52,9 @@ export const EditorSidebar = () => {
   } = useSidebar();
 
   return (
-    <Sidebar collapsible="icon" variant="floating" className="bg-muted">
-      <SidebarHeader className="h-14 flex items-center justify-between px-3">
-        {open && <span className="font-semibold">Canva Clone</span>}
+    <Sidebar collapsible="icon" variant="sidebar" className="bg-muted">
+      <SidebarHeader className="flex-row items-center justify-center">
+        <Logo />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -61,6 +62,7 @@ export const EditorSidebar = () => {
             {tools.map((tool) => (
               <SidebarMenuItem key={tool.name}>
                 <SidebarMenuButton
+                  tooltip={tool.name}
                   onClick={() => setActiveTool(tool.name)}
                   isActive={activeTool === tool.name}
                 >
