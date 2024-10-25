@@ -38,7 +38,7 @@ const tools = [
   { name: "Layers", icon: Layers }
 ];
 
-export const CanvaSidebar = () => {
+export const EditorSidebar = () => {
   const [activeTool, setActiveTool] = useState("Elements");
   const {
     state,
@@ -51,7 +51,7 @@ export const CanvaSidebar = () => {
   } = useSidebar();
 
   return (
-    <Sidebar variant="floating">
+    <Sidebar collapsible="icon" variant="floating" className="bg-muted">
       <SidebarHeader className="h-14 flex items-center justify-between px-3">
         {open && <span className="font-semibold">Canva Clone</span>}
       </SidebarHeader>
@@ -75,13 +75,11 @@ export const CanvaSidebar = () => {
           <SidebarGroup>
             <SidebarGroupLabel>{activeTool}</SidebarGroupLabel>
             <SidebarGroupContent>
-              <ScrollArea className="h-[calc(100vh-120px)]">
-                {activeTool === "Elements" && <ElementsPanel />}
-                {activeTool === "Text" && <TextPanel />}
-                {activeTool === "Images" && <ImagesPanel />}
-                {activeTool === "Background" && <BackgroundPanel />}
-                {activeTool === "Layers" && <LayersPanel />}
-              </ScrollArea>
+              {activeTool === "Elements" && <ElementsPanel />}
+              {activeTool === "Text" && <TextPanel />}
+              {activeTool === "Images" && <ImagesPanel />}
+              {activeTool === "Background" && <BackgroundPanel />}
+              {activeTool === "Layers" && <LayersPanel />}
             </SidebarGroupContent>
           </SidebarGroup>
         )}
