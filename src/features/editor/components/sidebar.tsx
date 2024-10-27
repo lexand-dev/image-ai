@@ -1,19 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import {
-  ChevronsLeft,
-  ChevronsRight,
-  Image as LucideImage,
+  LayoutTemplate,
+  ImageIcon,
   Layers,
-  Palette,
   Shapes,
-  Text,
+  Sparkles,
+  Settings,
   Type
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sidebar,
   SidebarContent,
@@ -22,76 +19,129 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
-  SidebarRail,
   useSidebar,
   SidebarFooter
 } from "@/components/ui/sidebar";
-import { Logo } from "./logo";
+import { Logo } from "@/features/editor/components/logo";
+import { ActiveTool } from "@/features/editor/types";
+import { SidebarItem } from "@/features/editor/components/sidebar-item";
 
-const tools = [
-  { name: "Elements", icon: Shapes },
-  { name: "Text", icon: Type },
-  { name: "Images", icon: LucideImage },
-  { name: "Background", icon: Palette },
-  { name: "Layers", icon: Layers }
-];
+interface EditorSidebarProps {
+  activeTool: ActiveTool;
+  onChangeActiveTool: (tool: ActiveTool) => void;
+}
 
-export const EditorSidebar = () => {
-  const [activeTool, setActiveTool] = useState("Elements");
-  const {
-    state,
-    open,
-    setOpen,
-    openMobile,
-    setOpenMobile,
-    isMobile,
-    toggleSidebar
-  } = useSidebar();
+export const EditorSidebar = ({
+  activeTool,
+  onChangeActiveTool
+}: EditorSidebarProps) => {
+  const { setOpen, isMobile } = useSidebar();
 
   return (
-    <Sidebar collapsible="icon" variant="sidebar" className="bg-muted">
-      <SidebarHeader className="flex-row items-center justify-center">
-        <Logo />
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
+    <Sidebar
+      collapsible="icon"
+      className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row"
+    >
+      {/* This is the first sidebar */}
+      <Sidebar
+        collapsible="none"
+        className="!w-[calc(var(--sidebar-width-icon)_+_1px)] border-r"
+      >
+        <SidebarHeader>
           <SidebarMenu>
-            {tools.map((tool) => (
-              <SidebarMenuItem key={tool.name}>
-                <SidebarMenuButton
-                  tooltip={tool.name}
-                  onClick={() => setActiveTool(tool.name)}
-                  isActive={activeTool === tool.name}
-                >
-                  <tool.icon className="mr-2" />
-                  {open && <span>{tool.name}</span>}
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            <SidebarMenuItem>
+              <Logo />
+            </SidebarMenuItem>
           </SidebarMenu>
-        </SidebarGroup>
-        {open && (
+        </SidebarHeader>
+        <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>{activeTool}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              {activeTool === "Elements" && <ElementsPanel />}
-              {activeTool === "Text" && <TextPanel />}
-              {activeTool === "Images" && <ImagesPanel />}
-              {activeTool === "Background" && <BackgroundPanel />}
-              {activeTool === "Layers" && <LayersPanel />}
+            <SidebarGroupContent className="px-1.5 md:px-0">
+              <SidebarMenu>
+                <SidebarItem
+                  icon={LayoutTemplate}
+                  label="Design"
+                  isActive={activeTool === "templates"}
+                  onClick={() => onChangeActiveTool("templates")}
+                />
+                <SidebarItem
+                  icon={ImageIcon}
+                  label="Image"
+                  isActive={activeTool === "images"}
+                  onClick={() => onChangeActiveTool("images")}
+                />
+                <SidebarItem
+                  icon={Type}
+                  label="Text"
+                  isActive={activeTool === "text"}
+                  onClick={() => onChangeActiveTool("text")}
+                />
+                <SidebarItem
+                  icon={Shapes}
+                  label="Shapes"
+                  isActive={activeTool === "shapes"}
+                  onClick={() => onChangeActiveTool("shapes")}
+                />
+                <SidebarItem
+                  icon={Sparkles}
+                  label="AI"
+                  isActive={activeTool === "ai"}
+                  onClick={() => onChangeActiveTool("ai")}
+                />
+                <SidebarItem
+                  icon={Settings}
+                  label="Settings"
+                  isActive={activeTool === "settings"}
+                  onClick={() => onChangeActiveTool("settings")}
+                />
+              </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        )}
-      </SidebarContent>
-      <SidebarFooter />
+          {isMobile && (
+            <SidebarGroup>
+              <SidebarGroupLabel>{activeTool}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                {activeTool === "shapes" && <ShapesPanel />}
+                {activeTool === "text" && <TextPanel />}
+                {activeTool === "images" && <ImagesPanel />}
+                {activeTool === "settings" && <SettingsPanel />}
+                {activeTool === "templates" && <DesignPanel />}
+                {activeTool === "ai" && <AIPanel />}
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )}
+        </SidebarContent>
+        <SidebarFooter />
+      </Sidebar>
+      {/* Second Sidebar */}
+      <Sidebar collapsible="none" className="hidden flex-1 md:flex">
+        <SidebarHeader className="flex-row items-center justify-center">
+          <div className="flex w-full items-center justify-between">
+            <div className="text-base font-medium text-foreground">
+              {activeTool}
+            </div>
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup className="px-0">
+            <SidebarGroupContent>
+              {activeTool === "shapes" && <ShapesPanel />}
+              {activeTool === "text" && <TextPanel />}
+              {activeTool === "images" && <ImagesPanel />}
+              {activeTool === "settings" && <SettingsPanel />}
+              {activeTool === "templates" && <DesignPanel />}
+              {activeTool === "ai" && <AIPanel />}
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter />
+      </Sidebar>
     </Sidebar>
   );
 };
 
-function ElementsPanel() {
+function ShapesPanel() {
   return (
     <div className="grid grid-cols-2 gap-2 p-2">
       {["Square", "Circle", "Triangle", "Line", "Arrow", "Star"].map(
@@ -134,8 +184,8 @@ function ImagesPanel() {
           key={i}
           className="aspect-square bg-muted rounded-md flex items-center justify-center"
         >
-          {/*This is where the change is made.  The LucideImage component is used instead of creating a new Image object.  The instructions were unclear on how to handle this situation.*/}
-          <LucideImage className="h-8 w-8 text-muted-foreground" />
+          {/*This is where the change is made.  The ImageIcon component is used instead of creating a new Image object.  The instructions were unclear on how to handle this situation.*/}
+          <ImageIcon className="h-8 w-8 text-muted-foreground" />
         </div>
       ))}
       <Button variant="outline" className="col-span-2">
@@ -145,7 +195,25 @@ function ImagesPanel() {
   );
 }
 
-function BackgroundPanel() {
+function AIPanel() {
+  return (
+    <div className="grid grid-cols-2 gap-2 p-2">
+      {[1, 2, 3, 4, 5, 6].map((i) => (
+        <div
+          key={i}
+          className="aspect-square bg-muted rounded-md flex items-center justify-center"
+        >
+          <ImageIcon className="h-8 w-8 text-muted-foreground" />
+        </div>
+      ))}
+      <Button variant="outline" className="col-span-2">
+        Generate Image
+      </Button>
+    </div>
+  );
+}
+
+function SettingsPanel() {
   return (
     <div className="grid grid-cols-3 gap-2 p-2">
       {[
@@ -162,7 +230,7 @@ function BackgroundPanel() {
   );
 }
 
-function LayersPanel() {
+function DesignPanel() {
   return (
     <div className="flex flex-col gap-1 p-2">
       {["Layer 1", "Layer 2", "Layer 3"].map((layer) => (
