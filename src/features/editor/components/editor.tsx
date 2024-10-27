@@ -10,14 +10,16 @@ import { Toolbar } from "@/features/editor/components/toolbar";
 import { Footer } from "@/features/editor/components/footer";
 import { ActiveTool } from "@/features/editor/types";
 
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
+  const { setOpen: setOpenSidebar } = useSidebar();
 
   const onChangeActiveTool = useCallback(
     (tool: ActiveTool) => {
       if (tool === activeTool) {
+        setOpenSidebar(false);
         return setActiveTool("select");
       }
 
@@ -30,6 +32,7 @@ export const Editor = () => {
       }
 
       setActiveTool(tool);
+      setOpenSidebar(true);
     },
     [activeTool]
   );
@@ -56,7 +59,7 @@ export const Editor = () => {
   }, [init]);
 
   return (
-    <SidebarProvider>
+    <>
       <EditorSidebar
         activeTool={activeTool}
         onChangeActiveTool={onChangeActiveTool}
@@ -74,6 +77,6 @@ export const Editor = () => {
           <Footer />
         </div>
       </main>
-    </SidebarProvider>
+    </>
   );
 };
