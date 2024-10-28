@@ -20,6 +20,7 @@
     "fabric": "5.3.0-browser",
     "jsdom": "^24.1.0",
     "lucide-react": "^0.453.0",
+    "material-colors": "^1.2.6",
     "next": "14.2.2",
     "react": "^18",
     "react-dom": "^18",
@@ -28,6 +29,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/material-colors": "^1.2.3",
     "@types/fabric": "5.3.0",
     "@types/node": "^20",
     "@types/react": "^18",
