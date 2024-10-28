@@ -190,7 +190,7 @@ const buildEditor = ({
 export const useEditor = () => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
-  const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>();
+  const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
 
   const [fillColor, setFillColor] = useState(FILL_COLOR);
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
@@ -216,7 +216,7 @@ export const useEditor = () => {
         setFillColor,
         setStrokeColor,
         setStrokeWidth,
-        selectedObjects: []
+        selectedObjects
       });
     }
 
