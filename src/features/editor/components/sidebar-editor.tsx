@@ -21,6 +21,7 @@ import { ShapePanel } from "@/features/editor/components/shape-panel";
 import { SidebarItem } from "@/features/editor/components/sidebar-item";
 import { SidebarTools } from "@/features/editor/components/sidebar-tools";
 import { FillColorPanel } from "@/features/editor/components/fill-color-panel";
+import { StrokeColorPanel } from "@/features/editor/components/stroke-color-panel";
 
 interface EditorSidebarProps {
   editor: Editor | undefined;
@@ -86,6 +87,9 @@ export const SidebarEditor = ({
             <SidebarGroupContent>
               {activeTool === "shapes" && <ShapePanel editor={editor} />}
               {activeTool === "fill" && <FillColorPanel editor={editor} />}
+              {activeTool === "stroke-color" && (
+                <StrokeColorPanel editor={editor} />
+              )}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
