@@ -10,7 +10,8 @@ import {
   DIAMOND_OPTIONS,
   TRIANGLE_OPTIONS,
   BuildEditorProps,
-  RECTANGLE_OPTIONS
+  RECTANGLE_OPTIONS,
+  EditorHookProps
 } from "@/features/editor/types";
 import { isTextType } from "@/features/editor/utils";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
@@ -187,7 +188,7 @@ const buildEditor = ({
   };
 };
 
-export const useEditor = () => {
+export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
@@ -203,7 +204,8 @@ export const useEditor = () => {
 
   useCanvasEvents({
     canvas,
-    setSelectedObjects
+    setSelectedObjects,
+    clearSelectionCallback
   });
 
   const editor = useMemo(() => {

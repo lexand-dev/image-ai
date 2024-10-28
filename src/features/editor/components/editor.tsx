@@ -8,7 +8,7 @@ import { SidebarEditor } from "@/features/editor/components/sidebar-editor";
 import { Navbar } from "@/features/editor/components/navbar";
 import { Toolbar } from "@/features/editor/components/toolbar";
 import { Footer } from "@/features/editor/components/footer";
-import { ActiveTool } from "@/features/editor/types";
+import { ActiveTool, selectionDependentTools } from "@/features/editor/types";
 
 import { useSidebar } from "@/components/ui/sidebar";
 
@@ -37,7 +37,16 @@ export const Editor = () => {
     [activeTool]
   );
 
-  const { init, editor } = useEditor();
+  const onClearSelection = useCallback(() => {
+    if (selectionDependentTools.includes(activeTool)) {
+      onChangeActiveTool("select");
+      setOpenSidebar(false);
+    }
+  }, [activeTool]);
+
+  const { init, editor } = useEditor({
+    clearSelectionCallback: onClearSelection
+  });
 
   const canvasRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
