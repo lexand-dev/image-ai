@@ -71,7 +71,12 @@ export const Editor = () => {
             activeTool={activeTool}
             onChangeActiveTool={onChangeActiveTool}
           />
-          <Toolbar />
+          <Toolbar
+            editor={editor}
+            activeTool={activeTool}
+            onChangeActiveTool={onChangeActiveTool}
+            key={JSON.stringify(editor?.canvas.getActiveObject())}
+          />
           <div className="h-[calc(100%-124px)] bg-muted" ref={containerRef}>
             <canvas ref={canvasRef} />
           </div>

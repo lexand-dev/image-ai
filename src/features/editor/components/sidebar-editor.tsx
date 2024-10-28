@@ -20,6 +20,7 @@ import { ActiveTool, Editor } from "@/features/editor/types";
 import { ShapePanel } from "@/features/editor/components/shape-panel";
 import { SidebarItem } from "@/features/editor/components/sidebar-item";
 import { SidebarTools } from "@/features/editor/components/sidebar-tools";
+import { FillColorPanel } from "@/features/editor/components/fill-color-panel";
 
 interface EditorSidebarProps {
   editor: Editor | undefined;
@@ -84,6 +85,7 @@ export const SidebarEditor = ({
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
               {activeTool === "shapes" && <ShapePanel editor={editor} />}
+              {activeTool === "fill" && <FillColorPanel editor={editor} />}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
