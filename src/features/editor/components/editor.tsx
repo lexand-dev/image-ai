@@ -4,7 +4,7 @@ import { fabric } from "fabric";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useEditor } from "@/features/editor/hooks/use-editor";
-import { EditorSidebar } from "./sidebar";
+import { SidebarEditor } from "@/features/editor/components/sidebar-editor";
 import { Navbar } from "@/features/editor/components/navbar";
 import { Toolbar } from "@/features/editor/components/toolbar";
 import { Footer } from "@/features/editor/components/footer";
@@ -37,7 +37,7 @@ export const Editor = () => {
     [activeTool]
   );
 
-  const { init } = useEditor();
+  const { init, editor } = useEditor();
 
   const canvasRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -60,7 +60,8 @@ export const Editor = () => {
 
   return (
     <>
-      <EditorSidebar
+      <SidebarEditor
+        editor={editor}
         activeTool={activeTool}
         onChangeActiveTool={onChangeActiveTool}
       />
