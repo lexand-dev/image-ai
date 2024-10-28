@@ -22,6 +22,7 @@ import { SidebarItem } from "@/features/editor/components/sidebar-item";
 import { SidebarTools } from "@/features/editor/components/sidebar-tools";
 import { FillColorPanel } from "@/features/editor/components/fill-color-panel";
 import { StrokeColorPanel } from "@/features/editor/components/stroke-color-panel";
+import { StrokeWidthPanel } from "@/features/editor/components/stroke-width-panel";
 
 interface EditorSidebarProps {
   editor: Editor | undefined;
@@ -89,6 +90,9 @@ export const SidebarEditor = ({
               {activeTool === "fill" && <FillColorPanel editor={editor} />}
               {activeTool === "stroke-color" && (
                 <StrokeColorPanel editor={editor} />
+              )}
+              {activeTool === "stroke-width" && (
+                <StrokeWidthPanel editor={editor} />
               )}
             </SidebarGroupContent>
           </SidebarGroup>
