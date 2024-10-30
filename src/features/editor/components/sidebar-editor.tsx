@@ -16,10 +16,13 @@ import {
   SidebarGroupContent,
   useSidebar
 } from "@/components/ui/sidebar";
+
 import { ActiveTool, Editor } from "@/features/editor/types";
-import { ShapePanel } from "@/features/editor/components/shape-panel";
 import { SidebarItem } from "@/features/editor/components/sidebar-item";
 import { SidebarTools } from "@/features/editor/components/sidebar-tools";
+
+import { ShapePanel } from "@/features/editor/components/shape-panel";
+import { OpacityPanel } from "@/features/editor/components/opacity-panel";
 import { FillColorPanel } from "@/features/editor/components/fill-color-panel";
 import { StrokeColorPanel } from "@/features/editor/components/stroke-color-panel";
 import { StrokeWidthPanel } from "@/features/editor/components/stroke-width-panel";
@@ -94,6 +97,7 @@ export const SidebarEditor = ({
               {activeTool === "stroke-width" && (
                 <StrokeWidthPanel editor={editor} />
               )}
+              {activeTool === "opacity" && <OpacityPanel editor={editor} />}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
