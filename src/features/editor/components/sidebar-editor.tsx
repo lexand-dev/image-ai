@@ -21,6 +21,7 @@ import { ActiveTool, Editor } from "@/features/editor/types";
 import { SidebarItem } from "@/features/editor/components/sidebar-item";
 import { SidebarTools } from "@/features/editor/components/sidebar-tools";
 
+import { TextPanel } from "@/features/editor/components/text-panel";
 import { ShapePanel } from "@/features/editor/components/shape-panel";
 import { OpacityPanel } from "@/features/editor/components/opacity-panel";
 import { FillColorPanel } from "@/features/editor/components/fill-color-panel";
@@ -90,6 +91,7 @@ export const SidebarEditor = ({
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
               {activeTool === "shapes" && <ShapePanel editor={editor} />}
+              {activeTool === "text" && <TextPanel editor={editor} />}
               {activeTool === "fill" && <FillColorPanel editor={editor} />}
               {activeTool === "stroke-color" && (
                 <StrokeColorPanel editor={editor} />
